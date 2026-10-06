@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, CheckCircle, MapPin, Phone, User, Building, Send, FileSpreadsheet, AlertCircle, ArrowRight } from 'lucide-react';
+import { X, CheckCircle, MapPin, Phone, User, Send, FileSpreadsheet, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
@@ -90,7 +90,6 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
     setError(null);
 
     try {
-      // 1. If logged in and saveAddress checked, save to address book
       if (user && formData.saveAddress && selectedAddressIndex === -1) {
         try {
           await addAddress({
@@ -103,11 +102,10 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
             isDefault: !user.addresses || user.addresses.length === 0
           });
         } catch (e) {
-          console.warn('Failed to save address to book:', e);
+          console.warn('Failed to save address:', e);
         }
       }
 
-      // 2. Submit order payload matching FR-5
       const payload = {
         customerName: formData.customerName.trim(),
         customerPhone: formData.customerPhone.trim(),
@@ -130,7 +128,6 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
         setOrderSuccess(res.data);
         clearCart();
 
-        // Trigger confetti
         try {
           confetti({
             particleCount: 100,
@@ -157,23 +154,23 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-slate-100 overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-xl w-full shadow-2xl border border-slate-100 overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[90vh] animate-slideUp sm:animate-fadeIn">
         {/* Header */}
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50 shrink-0">
           <div>
-            <h3 className="font-extrabold text-lg text-slate-900">
+            <h3 className="font-extrabold text-base sm:text-lg text-slate-900">
               {orderSuccess ? 'Order Confirmation' : 'Wholesale Checkout'}
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-[11px] sm:text-xs text-slate-500">
               {orderSuccess
-                ? 'Your order has been recorded and synced to Google Sheets'
-                : 'Enter wholesale delivery address & confirm bulk dispatch'}
+                ? 'Your order is recorded & synced to Google Sheets'
+                : 'Enter delivery address & confirm bulk dispatch'}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors active:scale-95"
           >
             <X className="w-5 h-5" />
           </button>
@@ -181,53 +178,53 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
 
         {orderSuccess ? (
           /* Success Screen */
-          <div className="p-6 text-center space-y-5">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
-              <CheckCircle className="w-10 h-10" />
+          <div className="p-5 sm:p-6 text-center space-y-4 overflow-y-auto flex-1">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
+              <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10" />
             </div>
 
             <div>
-              <span className="inline-block px-3 py-1 bg-emerald-50 text-emerald-800 text-xs font-bold rounded-full mb-2">
+              <span className="inline-block px-3 py-1 bg-emerald-50 text-emerald-800 text-[11px] sm:text-xs font-bold rounded-full mb-1">
                 Order #{orderSuccess.order.orderId} Placed
               </span>
-              <h2 className="text-2xl font-black text-slate-900">Order Placed Successfully!</h2>
-              <p className="text-slate-600 text-sm mt-1">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900">Order Placed Successfully!</h2>
+              <p className="text-slate-600 text-xs sm:text-sm mt-1">
                 Thank you, <strong className="text-slate-800">{orderSuccess.order.customerName}</strong>. Your bulk order is booked.
               </p>
             </div>
 
             {/* Google Sheets Sync Status Box */}
-            <div className="p-4 bg-emerald-50/80 border border-emerald-200 rounded-xl text-left space-y-2">
-              <div className="flex items-center gap-2 text-emerald-900 font-semibold text-sm">
+            <div className="p-3.5 sm:p-4 bg-emerald-50/90 border border-emerald-200 rounded-2xl text-left space-y-1.5 text-xs">
+              <div className="flex items-center gap-2 text-emerald-900 font-bold">
                 <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
                 <span>Google Sheets Automation (FR-5 & FR-9)</span>
               </div>
-              <p className="text-xs text-emerald-800">
+              <p className="text-emerald-800">
                 Worksheet: <span className="font-mono font-bold bg-white px-2 py-0.5 rounded border border-emerald-200">{orderSuccess.googleSheet?.sheetTitle}</span>
               </p>
-              <div className="flex items-center gap-2 text-xs text-emerald-700">
+              <div className="flex items-center gap-2 text-[11px] text-emerald-700">
                 <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                 <span>{orderSuccess.googleSheet?.live ? 'Live Google Sheet updated immediately' : 'Order recorded to daily worksheet and sync queue'}</span>
               </div>
             </div>
 
             {/* Order Details Summary */}
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left text-xs space-y-2">
+            <div className="bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2">
               <div className="flex justify-between">
                 <span className="text-slate-500">Order ID:</span>
                 <span className="font-mono font-bold text-slate-900">#{orderSuccess.order.orderId}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Delivery Address:</span>
-                <span className="font-medium text-slate-900 text-right max-w-[280px]">
+                <span className="font-medium text-slate-900 text-right max-w-[240px] truncate">
                   {orderSuccess.order.address}, {orderSuccess.order.city} ({orderSuccess.order.zip})
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Total Items:</span>
-                <span className="font-medium text-slate-900">{orderSuccess.order.items.length} wholesale products</span>
+                <span className="font-medium text-slate-900">{orderSuccess.order.items.length} wholesale commodities</span>
               </div>
-              <div className="flex justify-between pt-2 border-t border-slate-200 text-sm font-extrabold text-slate-900">
+              <div className="flex justify-between pt-2 border-t border-slate-200 text-sm font-black text-slate-900">
                 <span>Total Amount:</span>
                 <span className="text-brand-700">₹{orderSuccess.order.totalAmount?.toLocaleString('en-IN')}</span>
               </div>
@@ -236,7 +233,7 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
             <div className="pt-2">
               <button
                 onClick={onClose}
-                className="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm transition-all shadow-md shadow-brand-600/20"
+                className="w-full py-3 sm:py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm transition-all shadow-md shadow-brand-600/20 active:scale-98"
               >
                 Continue Browsing Wholesale Catalog
               </button>
@@ -244,9 +241,9 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
           </div>
         ) : (
           /* Checkout Form */
-          <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
             {error && (
-              <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs flex items-center gap-2">
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{error}</span>
               </div>
@@ -255,7 +252,7 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
             {/* Saved Addresses Selector (if logged in and has addresses) */}
             {user?.addresses && user.addresses.length > 0 && (
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">
                   Choose Saved Address
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -264,16 +261,16 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
                       key={idx}
                       type="button"
                       onClick={() => handleSelectSavedAddress(idx)}
-                      className={`p-3 rounded-xl border text-left text-xs transition-all ${
+                      className={`p-2.5 sm:p-3 rounded-xl border text-left text-xs transition-all active:scale-98 ${
                         selectedAddressIndex === idx
-                          ? 'border-brand-600 bg-brand-50/50 ring-1 ring-brand-600'
+                          ? 'border-brand-600 bg-brand-50/60 ring-1 ring-brand-600'
                           : 'border-slate-200 bg-slate-50 hover:border-slate-300'
                       }`}
                     >
-                      <div className="flex items-center justify-between font-bold text-slate-900 mb-1">
+                      <div className="flex items-center justify-between font-bold text-slate-900 mb-0.5">
                         <span>{addr.name}</span>
                         {addr.isDefault && (
-                          <span className="text-[10px] bg-brand-200 text-brand-800 px-1.5 py-0.2 rounded">
+                          <span className="text-[10px] bg-brand-200 text-brand-800 px-1.5 py-0.2 rounded font-semibold">
                             Default
                           </span>
                         )}
@@ -294,7 +291,7 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
                         zip: ''
                       }));
                     }}
-                    className={`p-3 rounded-xl border text-center text-xs font-semibold flex items-center justify-center transition-all ${
+                    className={`p-2.5 sm:p-3 rounded-xl border text-center text-xs font-semibold flex items-center justify-center transition-all active:scale-98 ${
                       selectedAddressIndex === -1
                         ? 'border-brand-600 bg-brand-50/50 text-brand-700'
                         : 'border-dashed border-slate-300 text-slate-600 hover:border-brand-500 hover:text-brand-600'
@@ -321,7 +318,7 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
                     value={formData.customerName}
                     onChange={handleInputChange}
                     placeholder="e.g. Rahul Gupta / Kirana Store"
-                    className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none transition-all"
+                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none transition-all"
                   />
                 </div>
               </div>
@@ -339,14 +336,14 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
                     value={formData.customerPhone}
                     onChange={handleInputChange}
                     placeholder="e.g. 9812345678"
-                    className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none transition-all"
+                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none transition-all"
                   />
                 </div>
               </div>
             </div>
 
             {/* Delivery Address Details */}
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Delivery Street Address & Landmark *
@@ -359,37 +356,37 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
                     required
                     value={formData.street}
                     onChange={handleInputChange}
-                    placeholder="Warehouse / Shop No., Wholesale Mandi, Street, Landmark"
+                    placeholder="Shop No. / Godown, Mandi, Street, Landmark"
                     className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none transition-all resize-none"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">City</label>
+                  <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 mb-1">City</label>
                   <input
                     type="text"
                     name="city"
                     value={formData.city}
                     onChange={handleInputChange}
-                    placeholder="e.g. Delhi / Panipat"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none transition-all"
+                    placeholder="Delhi"
+                    className="w-full px-2.5 sm:px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">State</label>
+                  <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 mb-1">State</label>
                   <input
                     type="text"
                     name="state"
                     value={formData.state}
                     onChange={handleInputChange}
-                    placeholder="e.g. Haryana / Delhi"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none transition-all"
+                    placeholder="Delhi"
+                    className="w-full px-2.5 sm:px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">PIN / ZIP *</label>
+                  <label className="block text-[11px] sm:text-xs font-semibold text-slate-700 mb-1">PIN / ZIP *</label>
                   <input
                     type="text"
                     name="zip"
@@ -397,21 +394,21 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
                     value={formData.zip}
                     onChange={handleInputChange}
                     placeholder="110001"
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none transition-all"
+                    className="w-full px-2.5 sm:px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:bg-white focus:border-brand-500 outline-none"
                   />
                 </div>
               </div>
             </div>
 
             {/* Order Value Preview */}
-            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+            <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between">
               <div>
-                <span className="text-xs text-slate-500 block">Total ({cart.length} items)</span>
-                <span className="text-lg font-extrabold text-slate-900">₹{cartTotal.toLocaleString('en-IN')}</span>
+                <span className="text-[11px] text-slate-500 block">Total ({cart.length} commodities)</span>
+                <span className="text-base sm:text-lg font-black text-slate-900">₹{cartTotal.toLocaleString('en-IN')}</span>
               </div>
               <div className="text-right">
-                <span className="text-[11px] text-emerald-600 font-semibold block">✓ In-Stock Validated</span>
-                <span className="text-[11px] text-slate-500">Instant Google Sheet Sync</span>
+                <span className="text-[11px] text-emerald-600 font-bold block">✓ Stock Validated</span>
+                <span className="text-[10px] text-slate-500">Instant Google Sheet Sync</span>
               </div>
             </div>
 
@@ -419,17 +416,17 @@ const CheckoutModal = ({ isOpen, onClose, onOrderPlaced }) => {
             <button
               type="submit"
               disabled={loading || cart.length === 0}
-              className="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 disabled:bg-slate-300 text-white rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 shadow-md shadow-brand-600/30 transition-all cursor-pointer disabled:cursor-not-allowed"
+              className="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 disabled:bg-slate-300 text-white rounded-xl font-black text-sm flex items-center justify-center gap-2 shadow-md shadow-brand-600/30 transition-all cursor-pointer disabled:cursor-not-allowed active:scale-98"
             >
               {loading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Processing Wholesale Order & Sheets Sync...</span>
+                  <span>Syncing Order to Google Sheets...</span>
                 </>
               ) : (
                 <>
                   <Send className="w-4 h-4" />
-                  <span>Place Order & Append to Google Sheet</span>
+                  <span>Confirm & Place Wholesale Order</span>
                 </>
               )}
             </button>

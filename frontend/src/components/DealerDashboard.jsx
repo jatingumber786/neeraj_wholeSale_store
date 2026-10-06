@@ -197,34 +197,34 @@ const DealerDashboard = ({ onOpenAuth }) => {
       </div>
 
       {/* Sub-tab Navigation */}
-      <div className="flex border-b border-slate-200 space-x-6 text-sm font-semibold">
+      <div className="flex border-b border-slate-200 overflow-x-auto scrollbar-none space-x-4 sm:space-x-6 text-xs sm:text-sm font-semibold">
         <button
           onClick={() => setActiveSubTab('orders')}
-          className={`pb-3 flex items-center gap-2 border-b-2 transition-all ${
+          className={`pb-3 flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all whitespace-nowrap active:scale-95 ${
             activeSubTab === 'orders'
               ? 'border-dealer-600 text-dealer-700'
               : 'border-transparent text-slate-500 hover:text-slate-900'
           }`}
         >
           <Clock className="w-4 h-4" />
-          <span>Today's Orders Feed ({todayOrders.length})</span>
+          <span>Today's Orders ({todayOrders.length})</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('inventory')}
-          className={`pb-3 flex items-center gap-2 border-b-2 transition-all ${
+          className={`pb-3 flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all whitespace-nowrap active:scale-95 ${
             activeSubTab === 'inventory'
               ? 'border-dealer-600 text-dealer-700'
               : 'border-transparent text-slate-500 hover:text-slate-900'
           }`}
         >
           <Layers className="w-4 h-4" />
-          <span>Product & Inventory Management ({products.length})</span>
+          <span>Inventory & Products ({products.length})</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('sheets')}
-          className={`pb-3 flex items-center gap-2 border-b-2 transition-all ${
+          className={`pb-3 flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all whitespace-nowrap active:scale-95 ${
             activeSubTab === 'sheets'
               ? 'border-dealer-600 text-dealer-700'
               : 'border-transparent text-slate-500 hover:text-slate-900'
@@ -241,24 +241,76 @@ const DealerDashboard = ({ onOpenAuth }) => {
       {/* Sub-tab 1: Orders Feed */}
       {activeSubTab === 'orders' && (
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs">
-          <div className="p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+          <div className="p-3.5 sm:p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2.5">
             <div>
-              <h3 className="font-bold text-sm text-slate-900">
-                Live Google Sheet Mirror (Worksheet: {todayTitle})
+              <h3 className="font-extrabold text-xs sm:text-sm text-slate-900">
+                Live Google Sheet Mirror ({todayTitle})
               </h3>
-              <p className="text-xs text-slate-500">
-                Format: Order ID | Time | Customer | Phone | Product | Qty | Address | ZIP
+              <p className="text-[11px] text-slate-500">
+                Order ID • Time • Customer • Phone • Product • Qty • Address • ZIP
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-semibold flex items-center gap-1.5">
+              <span className="px-2.5 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg text-[11px] font-bold flex items-center gap-1">
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Auto-Appended</span>
               </span>
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          {/* Mobile Orders View (Cards layout for Phones) */}
+          <div className="md:hidden divide-y divide-slate-100 p-3 space-y-3">
+            {todayOrders.length === 0 ? (
+              <div className="text-center py-10 text-slate-400">
+                <FileSpreadsheet className="w-8 h-8 mx-auto text-slate-300 mb-2" />
+                <p className="font-bold text-slate-700 text-sm">No orders today</p>
+                <p className="text-xs text-slate-500">Incoming bulk orders will sync here and to Google Sheet.</p>
+              </div>
+            ) : (
+              todayOrders.map((ord) => {
+                const timeStr = new Date(ord.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const totalQty = ord.items.reduce((s, it) => s + it.quantity, 0);
+
+                return (
+                  <div key={ord._id} className="p-3.5 rounded-xl border border-slate-200/90 bg-white space-y-2.5 shadow-2xs">
+                    <div className="flex justify-between items-center">
+                      <span className="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded text-xs">
+                        #{ord.orderId}
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-medium">🕒 {timeStr}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        ord.sheetSynced ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                      }`}>
+                        {ord.sheetSynced ? 'Sheet Synced' : 'Pending'}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-baseline text-xs">
+                      <span className="font-bold text-slate-900">{ord.customerName}</span>
+                      <span className="font-mono text-slate-600">{ord.customerPhone}</span>
+                    </div>
+
+                    <div className="bg-slate-50 p-2 rounded-lg text-xs space-y-1">
+                      {ord.items.map((it, idx) => (
+                        <div key={idx} className="flex justify-between text-slate-700">
+                          <span className="truncate max-w-[200px]">• {it.name}</span>
+                          <span className="font-bold">{it.quantity} {it.unit}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex justify-between items-center text-xs pt-1 border-t border-slate-100">
+                      <span className="text-slate-500 text-[11px] truncate max-w-[180px]">📍 {ord.address}</span>
+                      <span className="font-black text-slate-900">₹{ord.totalAmount?.toLocaleString('en-IN')}</span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {/* Desktop & Tablet Orders View (Wide Table) */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-100/80 border-b border-slate-200 font-bold uppercase tracking-wider text-slate-600">

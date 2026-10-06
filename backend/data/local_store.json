@@ -1,0 +1,190 @@
+{
+  "products": [
+    {
+      "_id": "2cf89da87b6e4bd6ad60609f",
+      "name": "Basmati Rice Premium (25kg)",
+      "category": "Grains & Rice",
+      "price": 1850,
+      "stock": 48,
+      "unit": "25kg bag",
+      "minOrderQty": 1,
+      "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80",
+      "description": "Aged long grain aromatic Basmati rice, wholesale export quality packaging.",
+      "outOfStock": false,
+      "createdAt": "2026-10-06T08:25:51.018Z",
+      "updatedAt": "2026-10-06T08:37:45.687Z"
+    },
+    {
+      "_id": "1d75048c46714caa92c2c21d",
+      "name": "Refined Mustard Oil Tin (15L)",
+      "category": "Edible Oils",
+      "price": 2150,
+      "stock": 35,
+      "unit": "15L tin",
+      "minOrderQty": 1,
+      "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80",
+      "description": "Cold-pressed pure kachi ghani mustard oil for commercial kitchens & grocery stores.",
+      "outOfStock": false,
+      "createdAt": "2026-10-06T08:25:51.044Z",
+      "updatedAt": "2026-10-06T08:25:51.044Z"
+    },
+    {
+      "_id": "13dc0ec5b437408da1d6cfe3",
+      "name": "Sunflower Refined Oil Pouch Carton (12 x 1L)",
+      "category": "Edible Oils",
+      "price": 1480,
+      "stock": 16,
+      "unit": "Carton (12L)",
+      "minOrderQty": 1,
+      "image": "https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?auto=format&fit=crop&w=600&q=80",
+      "description": "12 packets of 1 Litre fortified refined sunflower oil.",
+      "outOfStock": false,
+      "createdAt": "2026-10-06T08:25:51.071Z",
+      "updatedAt": "2026-10-06T08:38:35.413Z"
+    },
+    {
+      "_id": "e0a2044f4b464c76b3181d78",
+      "name": "Whole Wheat Chakki Atta (50kg)",
+      "category": "Flour & Atta",
+      "price": 1650,
+      "stock": 40,
+      "unit": "50kg sack",
+      "minOrderQty": 1,
+      "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80",
+      "description": "100% whole grain stone-ground chakki fresh wheat atta.",
+      "outOfStock": false,
+      "createdAt": "2026-10-06T08:25:51.098Z",
+      "updatedAt": "2026-10-06T08:25:51.098Z"
+    },
+    {
+      "_id": "4d97db08bdb74dcc802798fd",
+      "name": "Refined White Sugar (50kg)",
+      "category": "Sugar & Salt",
+      "price": 2100,
+      "stock": 22,
+      "unit": "50kg bag",
+      "minOrderQty": 1,
+      "image": "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=600&q=80",
+      "description": "Grade-M sparkling white crystal sugar wholesale sack.",
+      "outOfStock": false,
+      "createdAt": "2026-10-06T08:25:51.127Z",
+      "updatedAt": "2026-10-06T08:25:51.128Z"
+    },
+    {
+      "_id": "4af3abc777714cbc9afd7558",
+      "name": "Toor Dal Desi Unpolished (30kg)",
+      "category": "Pulses & Lentils",
+      "price": 3600,
+      "stock": 18,
+      "unit": "30kg bag",
+      "minOrderQty": 1,
+      "image": "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=600&q=80",
+      "description": "Farm fresh unpolished toor dal with high protein content.",
+      "outOfStock": false,
+      "createdAt": "2026-10-06T08:25:51.158Z",
+      "updatedAt": "2026-10-06T08:25:51.158Z"
+    },
+    {
+      "_id": "ab8ff9964aa44588b86a38ac",
+      "name": "Iodized Crystal Salt Bag (50kg)",
+      "category": "Sugar & Salt",
+      "price": 450,
+      "stock": 6,
+      "unit": "50kg sack",
+      "minOrderQty": 2,
+      "image": "https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?auto=format&fit=crop&w=600&q=80",
+      "description": "Vacuum evaporated iodized salt for bulk catering and food manufacturing.",
+      "outOfStock": false,
+      "createdAt": "2026-10-06T08:25:51.188Z",
+      "updatedAt": "2026-10-06T08:25:51.188Z"
+    },
+    {
+      "_id": "90cead3c1e684b1b819668a6",
+      "name": "Kashmiri Red Chilli Powder Box (10kg)",
+      "category": "Spices",
+      "price": 3200,
+      "stock": 0,
+      "unit": "10kg box",
+      "minOrderQty": 1,
+      "image": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80",
+      "description": "Deep red color, mild pungency Kashmiri mirch powder in bulk corrugated carton.",
+      "outOfStock": true,
+      "createdAt": "2026-10-06T08:25:51.220Z",
+      "updatedAt": "2026-10-06T08:25:51.220Z"
+    }
+  ],
+  "users": [
+    {
+      "_id": "864efd2bb5f144bcbf3dae5a",
+      "name": "Head Wholesale Dealer",
+      "email": "dealer@wholesale.com",
+      "phone": "+91 98765 43210",
+      "role": "dealer",
+      "addresses": [],
+      "createdAt": "2026-10-06T08:37:29.243Z",
+      "updatedAt": "2026-10-06T08:37:29.243Z"
+    }
+  ],
+  "counters": [
+    {
+      "_id": "orderId",
+      "seq": 1002,
+      "createdAt": "2026-10-06T08:37:45.666Z",
+      "updatedAt": "2026-10-06T08:38:35.385Z"
+    }
+  ],
+  "orders": [
+    {
+      "_id": "69795d3c9d414786ad66596f",
+      "orderId": "1001",
+      "customerName": "Rahul",
+      "customerPhone": "9811223344",
+      "items": [
+        {
+          "product": "2cf89da87b6e4bd6ad60609f",
+          "name": "Basmati Rice Premium (25kg)",
+          "price": 1850,
+          "quantity": 2,
+          "unit": "25kg bag",
+          "subtotal": 3700
+        }
+      ],
+      "address": "Shop 12, Main Mandi, Delhi",
+      "city": "Delhi",
+      "state": "Delhi",
+      "zip": "110001",
+      "totalAmount": 3700,
+      "status": "placed",
+      "createdAt": "2026-10-06T08:37:45.705Z",
+      "updatedAt": "2026-10-06T08:37:45.737Z",
+      "sheetSynced": true,
+      "sheetSyncedAt": "2026-10-06T08:37:45.709Z"
+    },
+    {
+      "_id": "c7f2ad7c05d249f6a2bb7756",
+      "orderId": "1002",
+      "customerName": "Jatin",
+      "customerPhone": "9988776655",
+      "items": [
+        {
+          "product": "13dc0ec5b437408da1d6cfe3",
+          "name": "Sunflower Refined Oil Pouch Carton (12 x 1L)",
+          "price": 1480,
+          "quantity": 12,
+          "unit": "Carton (12L)",
+          "subtotal": 17760
+        }
+      ],
+      "address": "GT Road, Wholesale Market, Panipat",
+      "city": "Panipat",
+      "state": "Haryana",
+      "zip": "132103",
+      "totalAmount": 17760,
+      "status": "placed",
+      "createdAt": "2026-10-06T08:38:35.437Z",
+      "updatedAt": "2026-10-06T08:38:35.475Z",
+      "sheetSynced": true,
+      "sheetSyncedAt": "2026-10-06T08:38:35.442Z"
+    }
+  ]
+}

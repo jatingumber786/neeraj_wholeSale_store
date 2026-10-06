@@ -1,0 +1,37 @@
+{
+  "06-10-2026": {
+    "createdAt": "2026-10-06T08:27:12.380Z",
+    "headers": [
+      "Order ID",
+      "Time",
+      "Customer",
+      "Phone",
+      "Product",
+      "Qty",
+      "Address",
+      "ZIP"
+    ],
+    "rows": [
+      [
+        "1001",
+        "14:07",
+        "Rahul",
+        "9811223344",
+        "Basmati Rice Premium (25kg) 25kg bag",
+        2,
+        "Shop 12, Main Mandi, Delhi, Delhi, Delhi",
+        "110001"
+      ],
+      [
+        "1002",
+        "14:08",
+        "Jatin",
+        "9988776655",
+        "Sunflower Refined Oil Pouch Carton (12 x 1L) Carton (12L)",
+        12,
+        "GT Road, Wholesale Market, Panipat, Panipat, Haryana",
+        "132103"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: wholesale-ecommerce-api
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DEALER_EMAIL
+        value: dealer@wholesale.com
+      - key: DEALER_PASSWORD
+        value: dealer123
+      - key: DEALER_PIN
+        value: 123456
+      - key: MONGO_URI
+        sync: false
+      - key: GOOGLE_SHEET_ID
+        sync: false
+      - key: GOOGLE_SERVICE_ACCOUNT_EMAIL
+        sync: false
+      - key: GOOGLE_PRIVATE_KEY
+        sync: false
